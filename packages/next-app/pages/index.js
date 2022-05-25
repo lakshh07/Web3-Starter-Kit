@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Header from "./Header";
 import React, { useEffect } from "react";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
@@ -23,26 +23,7 @@ export default function Home() {
   }, [toast]);
   return (
     <>
-      <Head>
-        <title>Web3 Starter Kit</title>
-        <meta
-          name="description"
-          content="A quick starter to build on Ethereum and Polygon! 💜"
-        />
-        <link rel="icon" href="/unicorn.png" />
-        <meta property="og:title" content="Web3 Starter Kit" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://web3starterkit.vercel.app/" />
-        <meta
-          property="og:image:url"
-          content="https://bafybeifacspez7tdlba5auczy5qqpqg3mhyakhorp4jvjesyeiaxn33gwm.ipfs.dweb.link/cover.png"
-        />
-        <meta
-          property="og:description"
-          content="A quick starter to build on Ethereum and Polygon! 💜"
-        />
-      </Head>
-
+      <Header />
       <Navbar />
       <Hero />
       {isConnected && <Greeter />}

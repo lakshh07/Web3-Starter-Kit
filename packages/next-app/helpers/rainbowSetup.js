@@ -1,9 +1,7 @@
-import { chain, createClient } from "wagmi";
-import {
-  apiProvider,
-  configureChains,
-  getDefaultWallets,
-} from "@rainbow-me/rainbowkit";
+import { chain, createClient, configureChains } from "wagmi";
+import { getDefaultWallets } from "@rainbow-me/rainbowkit";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
 
 export const { chains, provider } = configureChains(
   [
@@ -16,7 +14,7 @@ export const { chains, provider } = configureChains(
     chain.localhost,
     chain.hardhat,
   ],
-  [apiProvider.alchemy(process.env.ALCHEMY_ID), apiProvider.fallback()]
+  [alchemyProvider({ alchemyId: process.env.ALCHEMY_ID }), publicProvider()]
 );
 const { connectors } = getDefaultWallets({
   appName: "Web3 Starter Kit",

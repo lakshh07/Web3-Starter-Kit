@@ -6,18 +6,23 @@ import { WagmiConfig } from "wagmi";
 import { wagmiClient, chains } from "../helpers/rainbowSetup";
 
 function MyApp({ Component, pageProps }) {
+  const appInfo = {
+    appName: "🦄Web3 Starter Kit",
+  };
+
   return (
-    <ChakraProvider>
-      <WagmiConfig client={wagmiClient}>
-        <RainbowKitProvider
-          showRecentTransactions={true}
-          coolMode
-          chains={chains}
-        >
+    <WagmiConfig client={wagmiClient}>
+      <RainbowKitProvider
+        showRecentTransactions={true}
+        coolMode
+        appInfo={appInfo}
+        chains={chains}
+      >
+        <ChakraProvider>
           <Component {...pageProps} />
-        </RainbowKitProvider>
-      </WagmiConfig>
-    </ChakraProvider>
+        </ChakraProvider>
+      </RainbowKitProvider>
+    </WagmiConfig>
   );
 }
 

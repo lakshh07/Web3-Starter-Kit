@@ -16,10 +16,12 @@ export const { chains, provider } = configureChains(
   ],
   [alchemyProvider({ alchemyId: process.env.ALCHEMY_ID }), publicProvider()]
 );
+
 const { connectors } = getDefaultWallets({
   appName: "Web3 Starter Kit",
   chains,
 });
+
 export const wagmiClient = createClient({
   autoConnect: true,
   connectors,

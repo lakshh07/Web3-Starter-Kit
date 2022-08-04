@@ -13,28 +13,33 @@ import {
   useContractRead,
   useContractWrite,
   useWaitForTransaction,
+  usePrepareContractWrite,
 } from "wagmi";
 import { greeterAddress } from "../../utils/contractAddress";
 import contractAbi from "../../contracts/ABI/Greeter.json";
 
 function Greeter() {
-  const [greet, setGreet] = useState("");
+  const [greet, setGreet] = useState(" ");
   const toast = useToast();
 
   const {
     data: fetchData,
     isError: fetchIsError,
+    isFetched,
     isFetching,
-  } = useContractRead(
-    {
-      addressOrName: greeterAddress,
-      contractInterface: contractAbi,
-    },
-    "greet",
-    {
-      watch: true,
-    }
-  );
+  } = useContractRead({
+    addressOrName: greeterAddress,
+    contractInterface: contractAbi,
+    functionName: "greet",
+    watch: true,
+  });
+
+  const { config } = usePrepareContractWrite({
+    addressOrName: greeterAddress,
+    contractInterface: contractAbi,
+    functionName: "setGreeting",
+    args: [greet],
+  });
 
   const {
     data: postData,
@@ -42,21 +47,11 @@ function Greeter() {
     isLoading: postIsLoading,
     isSuccess: postIsSuccess,
     write,
-  } = useContractWrite(
-    {
-      addressOrName: greeterAddress,
-      contractInterface: contractAbi,
-    },
-    "setGreeting",
-    {
-      args: [greet],
-    }
-  );
+  } = useContractWrite(config);
 
-  const { data, isError, isLoading, isFetched, isSuccess } =
-    useWaitForTransaction({
-      hash: postData?.hash,
-    });
+  const { isError, isLoading, isSuccess } = useWaitForTransaction({
+    hash: postData?.hash,
+  });
 
   useEffect(() => {
     postIsSuccess && setGreet("");
@@ -78,7 +73,7 @@ function Greeter() {
         isClosable: true,
         position: "top",
       });
-  }, [isSuccess, isLoading, postIsSuccess, setGreet, postData, toast]);
+  }, [isSuccess, isLoading, postIsSuccess, postData, toast]);
 
   return (
     <>
@@ -88,6 +83,7 @@ function Greeter() {
         rounded={"10px"}
         p={"2em"}
         align={"center"}
+        suppressHydrationWarning
       >
         <Stack spacing={"1em"} align={"center"}>
           <Flex
@@ -119,6 +115,7 @@ function Greeter() {
           <Button
             isLoading={postIsLoading}
             fontWeight={"700"}
+            suppressHydrationWarning
             mt={"1em"}
             onClick={() => write()}
           >

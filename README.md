@@ -36,6 +36,15 @@ yarn dev
 >Contract are deployed on Polygon Mumbai
 
 <br/>
+
+<hr/>
+ 
+ >📣  Checkout branches for `React.js` and `Typescript`
+
+<hr/>
+
+<br/>
+
 🔏 Edit your smart contract `Greeter.sol` in `packages/hardhat/contracts`
 
 📝 Edit your frontend `index.js` in `packages/next-app/pages/`

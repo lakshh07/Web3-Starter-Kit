@@ -21,7 +21,7 @@ const { connectors } = getDefaultWallets({
   chains,
 });
 export const wagmiClient = createClient({
-  autoConnect: true,
+  // autoConnect: true,
   connectors,
   provider,
 });

@@ -22,6 +22,7 @@ import contractAbi from "../../contracts/ABI/Greeter.json";
 function Greeter() {
   const [greet, setGreet] = useState(" ");
   const [data, setData] = useState();
+  const [checker, setChecker] = useState(false);
   const toast = useToast();
   const { isConnected } = useAccount();
 
@@ -78,7 +79,8 @@ function Greeter() {
 
   useEffect(() => {
     setData(fetchData);
-  }, [isFetched]);
+    setChecker(true);
+  }, [isFetching, isFetched]);
 
   return (
     <>
@@ -97,14 +99,16 @@ function Greeter() {
             alignItems={"center"}
           >
             <Text fontWeight={"700"}>Greetings: </Text>
-            <Skeleton
-              isLoaded={!isFetching}
-              rounded={"30px"}
-              h={"20px"}
-              w={"150px"}
-            >
-              <Text>{data}</Text>
-            </Skeleton>
+            <Flex alignItems={"center"} justifyContent={"space-between"}>
+              <Skeleton
+                isLoaded={checker}
+                rounded={"30px"}
+                h={"20px"}
+                w={"150px"}
+              >
+                <Text>{data}</Text>
+              </Skeleton>
+            </Flex>
           </Flex>
 
           <Input
@@ -117,7 +121,7 @@ function Greeter() {
             onChange={(e) => setGreet(e.target.value)}
           />
           <Button
-            isLoading={postIsLoading}
+            isLoading={postIsLoading || isLoading}
             fontWeight={"700"}
             mt={"1em"}
             onClick={() => write()}

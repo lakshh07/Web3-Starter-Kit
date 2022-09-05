@@ -11,8 +11,8 @@ export default function Home() {
 
   useEffect(() => {
     toast({
-      title: "Network Detail",
-      description: "use Polygon Mumbai for testing",
+      title: "Connect Wallet",
+      description: "connect to Polygon Mumbai for testing",
       status: "info",
       duration: 4000,
       isClosable: false,

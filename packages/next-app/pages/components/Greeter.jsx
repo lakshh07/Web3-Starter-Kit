@@ -14,17 +14,19 @@ import {
   useContractWrite,
   useWaitForTransaction,
   usePrepareContractWrite,
+  useAccount,
 } from "wagmi";
 import { greeterAddress } from "../../utils/contractAddress";
 import contractAbi from "../../contracts/ABI/Greeter.json";
 
 function Greeter() {
   const [greet, setGreet] = useState(" ");
+  const [data, setData] = useState();
   const toast = useToast();
+  const { isConnected } = useAccount();
 
   const {
     data: fetchData,
-    isError: fetchIsError,
     isFetched,
     isFetching,
   } = useContractRead({
@@ -43,13 +45,12 @@ function Greeter() {
 
   const {
     data: postData,
-    isError: postIsError,
     isLoading: postIsLoading,
     isSuccess: postIsSuccess,
     write,
   } = useContractWrite(config);
 
-  const { isError, isLoading, isSuccess } = useWaitForTransaction({
+  const { isLoading, isSuccess } = useWaitForTransaction({
     hash: postData?.hash,
   });
 
@@ -75,6 +76,10 @@ function Greeter() {
       });
   }, [isSuccess, isLoading, postIsSuccess, postData, toast]);
 
+  useEffect(() => {
+    setData(fetchData);
+  }, [isFetched]);
+
   return (
     <>
       <Container
@@ -83,7 +88,6 @@ function Greeter() {
         rounded={"10px"}
         p={"2em"}
         align={"center"}
-        suppressHydrationWarning
       >
         <Stack spacing={"1em"} align={"center"}>
           <Flex
@@ -99,7 +103,7 @@ function Greeter() {
               h={"20px"}
               w={"150px"}
             >
-              <Text>{fetchData}</Text>
+              <Text>{data}</Text>
             </Skeleton>
           </Flex>
 
@@ -115,9 +119,9 @@ function Greeter() {
           <Button
             isLoading={postIsLoading}
             fontWeight={"700"}
-            suppressHydrationWarning
             mt={"1em"}
             onClick={() => write()}
+            isDisabled={!isConnected}
           >
             Set Greetings
           </Button>

@@ -1,12 +1,10 @@
 import { Heading, Container, Text, Flex, Link, Code } from "@chakra-ui/react";
 import React from "react";
-import { useConnect } from "wagmi";
 
 function Hero() {
-  const { isConnected } = useConnect();
   return (
     <>
-      <Container maxW={"1100px"} h={isConnected ? "45vh" : "75vh"} px={"2rem"}>
+      <Container maxW={"1100px"} h={"39vh"} px={"2rem"}>
         <Flex
           flexDirection={"column"}
           alignItems={"center"}

@@ -61,9 +61,9 @@ function Greeter() {
         title: "Transaction Sent",
         description: postData?.hash,
         status: "info",
-        duration: 6000,
+        duration: 3000,
         isClosable: true,
-        position: "top",
+        position: "bottom-right",
       });
 
     isSuccess &&
@@ -72,7 +72,7 @@ function Greeter() {
         status: "success",
         duration: 3000,
         isClosable: true,
-        position: "top",
+        position: "bottom-right",
       });
   }, [isSuccess, isLoading, postIsSuccess, postData, toast]);
 

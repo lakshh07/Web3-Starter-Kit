@@ -14,9 +14,9 @@ export default function Home() {
       title: "Network Detail",
       description: "use Polygon Mumbai for testing",
       status: "info",
-      duration: 6000,
+      duration: 4000,
       isClosable: false,
-      position: "top",
+      position: "bottom-right",
     });
   }, []);
   return (
